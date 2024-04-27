@@ -4,28 +4,37 @@ namespace Inilim\Env;
 
 abstract class Env
 {
-    protected static array $_ENV = [];
+    /**
+     * @var array
+     */
+    protected static $_ENV = [];
 
     /**
+     * @param int|string $key
      * @param mixed $default
      * @return mixed
      */
-    public static function get(string $env_key, $default = null)
+    public static function get($key, $default = null)
     {
-        if (self::has($env_key)) return static::$_ENV[$env_key];
-        else return $default;
+        return static::$_ENV[$key] ?? $default;
     }
 
     /**
+     * @param int|string $key
      * @param mixed $value
+     * @return void
      */
-    public static function set(string $env_key, $value): void
+    public static function set($key, $value)
     {
-        static::$_ENV[$env_key] = $value;
+        static::$_ENV[$key] = $value;
     }
 
-    public static function has(string $env_key): bool
+    /**
+     * @param int|string $key
+     * @return bool
+     */
+    public static function has($key)
     {
-        return \array_key_exists($env_key, static::$_ENV);
+        return \array_key_exists($key, static::$_ENV);
     }
 }

@@ -7,7 +7,10 @@ use Inilim\Env\Env;
  */
 class MyEnv extends Env
 {
-    protected static array $_ENV = [
+    /**
+     * @var array
+     */
+    protected static $_ENV = [
         'APP_NAME'  => 'app_name',
         'APP_ENV'   => 'local',
         'APP_KEY'   => '',
