@@ -16,7 +16,7 @@ abstract class Env
      */
     public static function get($key, $default = null)
     {
-        return static::$_ENV[$key] ?? $default;
+        return \_arr()->dataGet(static::$_ENV, $key, $default);
     }
 
     /**
@@ -26,15 +26,15 @@ abstract class Env
      */
     public static function set($key, $value)
     {
-        static::$_ENV[$key] = $value;
+        \_arr()->dataSet(static::$_ENV, $key, $value);
     }
 
     /**
-     * @param int|string $key
+     * @param int|string|array<string|int> $keys
      * @return bool
      */
-    public static function has($key)
+    public static function has($keys)
     {
-        return \array_key_exists($key, static::$_ENV);
+        return \_arr()->has(static::$_ENV, $keys);
     }
 }
