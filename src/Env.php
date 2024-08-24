@@ -2,39 +2,44 @@
 
 namespace Inilim\Env;
 
-abstract class Env
+class Env
 {
-    /**
-     * @var array
-     */
-    protected static $_ENV = [];
+    protected array $_ENV = [];
 
     /**
      * @param int|string $key
      * @param mixed $default
      * @return mixed
      */
-    public static function get($key, $default = null)
+    function get($key, $default = null)
     {
-        return \_arr()->dataGet(static::$_ENV, $key, $default);
+        return \_arr()->dataGet2($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      * @param mixed $value
-     * @return void
      */
-    public static function set($key, $value)
+    function set($key, $value): void
     {
-        \_arr()->dataSet(static::$_ENV, $key, $value);
+        \_arr()->dataSet($this->_ENV, $key, $value);
     }
 
     /**
      * @param int|string|array<string|int> $keys
-     * @return bool
      */
-    public static function has($keys)
+    function has($keys): bool
     {
-        return \_arr()->has(static::$_ENV, $keys);
+        return \_arr()->has($this->_ENV, $keys);
+    }
+
+    function addToRoot(array $values): void
+    {
+        $this->_ENV = \array_merge($this->_ENV, $values);
+    }
+
+    function setToRoot(array $values): void
+    {
+        $this->_ENV = $values;
     }
 }
