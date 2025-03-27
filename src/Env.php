@@ -2,9 +2,14 @@
 
 namespace Inilim\Env;
 
-class Env
+use Inilim\Tool\Arr;
+
+final class Env
 {
-    protected array $_ENV = [];
+    /**
+     * @var mixed[]
+     */
+    protected $_ENV = [];
 
     /**
      * @param int|string $key
@@ -13,32 +18,40 @@ class Env
      */
     function get($key, $default = null)
     {
-        return \_arr()->dataGet2($this->_ENV, $key, $default);
+        return Arr::dataGetV2($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      * @param mixed $value
+     * @return void
      */
-    function set($key, $value): void
+    function set($key, $value)
     {
-        \_arr()->dataSet($this->_ENV, $key, $value);
+        Arr::dataSet($this->_ENV, $key, $value);
     }
 
     /**
      * @param int|string|array<string|int> $keys
+     * @return bool
      */
-    function has($keys): bool
+    function has($keys)
     {
-        return \_arr()->has($this->_ENV, $keys);
+        return Arr::has($this->_ENV, $keys);
     }
 
-    function addToRoot(array $values): void
+    /**
+     * @return void
+     */
+    function addToRoot(array $values)
     {
         $this->_ENV = \array_merge($this->_ENV, $values);
     }
 
-    function setToRoot(array $values): void
+    /**
+     * @return void
+     */
+    function setToRoot(array $values)
     {
         $this->_ENV = $values;
     }

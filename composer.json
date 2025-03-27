@@ -14,8 +14,8 @@
         }
     ],
     "require": {
-        "php": "^8.2",
-        "inilim/array": "dev-main"
+        "php": ">=7.4",
+        "inilim/tools": "dev-main"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
