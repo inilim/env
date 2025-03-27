@@ -24,11 +24,12 @@ final class Env
     /**
      * @param int|string $key
      * @param mixed $value
-     * @return void
+     * @return self
      */
     function set($key, $value)
     {
         Arr::dataSet()($this->_ENV, $key, $value);
+        return $this;
     }
 
     /**
@@ -41,18 +42,20 @@ final class Env
     }
 
     /**
-     * @return void
+     * @return self
      */
     function addToRoot(array $values)
     {
         $this->_ENV = \array_merge($this->_ENV, $values);
+        return $this;
     }
 
     /**
-     * @return void
+     * @return self
      */
     function setToRoot(array $values)
     {
         $this->_ENV = $values;
+        return $this;
     }
 }
