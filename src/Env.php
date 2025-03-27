@@ -28,7 +28,7 @@ final class Env
      */
     function set($key, $value)
     {
-        Arr::dataSet($this->_ENV, $key, $value);
+        Arr::dataSet()($this->_ENV, $key, $value);
     }
 
     /**
