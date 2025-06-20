@@ -24,33 +24,33 @@ final class Env
     /**
      * @param int|string $key
      */
-    function getStr($key): string
+    function getStr($key, ?string $default = null): string
     {
-        return Arr::string($this->_ENV, $key);
+        return Arr::string($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      */
-    function getBool($key): bool
+    function getBool($key, ?bool $default = null): bool
     {
-        return Arr::boolean($this->_ENV, $key);
+        return Arr::boolean($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      */
-    function getInt($key): int
+    function getInt($key, ?int $default = null): int
     {
-        return Arr::integer($this->_ENV, $key);
+        return Arr::integer($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      */
-    function getFloat($key): float
+    function getFloat($key, ?float $default = null): float
     {
-        return Arr::float($this->_ENV, $key);
+        return Arr::float($this->_ENV, $key, $default);
     }
 
     /**
