@@ -90,4 +90,12 @@ final class Env
         }
         return $this;
     }
+
+    /**
+     * @return mixed[]
+     */
+    function getAll(): array
+    {
+        return $this->_ENV;
+    }
 }
