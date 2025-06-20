@@ -66,7 +66,6 @@ final class Env
 
     /**
      * @param int|string|array<string|int> $keys
-     * @return bool
      */
     function has($keys): bool
     {
@@ -74,20 +73,21 @@ final class Env
     }
 
     /**
+     * @param mixed[] $data
      * @return self
      */
-    function addToRoot(array $values)
+    function load(array $data, bool $overwrite = false)
     {
-        $this->_ENV = \array_merge($this->_ENV, $values);
-        return $this;
-    }
+        if ($overwrite) {
+            $this->_ENV = $data;
+            return $this;
+        }
 
-    /**
-     * @return self
-     */
-    function setToRoot(array $values)
-    {
-        $this->_ENV = $values;
+        if (!$this->_ENV) {
+            $this->_ENV = $data;
+        } else {
+            $this->_ENV = \array_merge($this->_ENV, $data);
+        }
         return $this;
     }
 }
