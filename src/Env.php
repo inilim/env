@@ -3,6 +3,7 @@
 namespace Inilim\Env;
 
 use Inilim\Tool\Arr;
+use Inilim\Tool\File;
 
 final class Env
 {
@@ -88,6 +89,15 @@ final class Env
         } else {
             $this->_ENV = \array_merge($this->_ENV, $data);
         }
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    function loadFromFile(string $file, bool $overwrite = false)
+    {
+        $this->load(File::getInclude($file), $overwrite);
         return $this;
     }
 

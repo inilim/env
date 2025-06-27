@@ -1,26 +1,26 @@
 {
-    "name": "inilim/env",
-    "description": "env",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Inilim\\Env\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "inilim"
-        }
-    ],
-    "require": {
-        "php": ">=7.4",
-        "inilim/tools": "dev-main"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require-dev": {
-        "phpstan/phpstan": "@stable",
-        "inilim/dump": "dev-main"
+  "name": "inilim/env",
+  "description": "env",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Inilim\\Env\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "inilim"
+    }
+  ],
+  "require": {
+    "php": ">=7.4",
+    "inilim/tools": "dev-main"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require-dev": {
+    "inilim/dump": "dev-main",
+    "phpstan/phpstan": "^2.1"
+  }
 }
