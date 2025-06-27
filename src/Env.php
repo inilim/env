@@ -97,7 +97,7 @@ final class Env
      */
     function loadFromFile(string $file, bool $overwrite = false)
     {
-        $this->load(File::getInclude($file), $overwrite);
+        $this->load(File::getRequire($file), $overwrite);
         return $this;
     }
 
