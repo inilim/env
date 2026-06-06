@@ -15,10 +15,8 @@
   ],
   "require": {
     "php": ">=7.4",
-    "inilim/tools": "dev-main"
+    "inilim/tools": "^0.0.04062026"
   },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "require-dev": {
     "inilim/dump": "dev-main",
     "phpstan/phpstan": "^2.1"
