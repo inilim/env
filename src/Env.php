@@ -17,40 +17,55 @@ final class Env
      * @param mixed $default
      * @return mixed
      */
-    function get($key, $default = null)
-    {
+    function get(
+        $key,
+        #[\SensitiveParameter]
+        $default = null
+    ) {
         return Arr::dataGet($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      */
-    function getStr($key, ?string $default = null): string
-    {
+    function getStr(
+        $key,
+        #[\SensitiveParameter]
+        ?string $default = null
+    ): string {
         return Arr::string($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      */
-    function getBool($key, ?bool $default = null): bool
-    {
+    function getBool(
+        $key,
+        #[\SensitiveParameter]
+        ?bool $default = null
+    ): bool {
         return Arr::boolean($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      */
-    function getInt($key, ?int $default = null): int
-    {
+    function getInt(
+        $key,
+        #[\SensitiveParameter]
+        ?int $default = null
+    ): int {
         return Arr::integer($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      */
-    function getFloat($key, ?float $default = null): float
-    {
+    function getFloat(
+        $key,
+        #[\SensitiveParameter]
+        ?float $default = null
+    ): float {
         return Arr::float($this->_ENV, $key, $default);
     }
 
@@ -59,8 +74,11 @@ final class Env
      * @param mixed $value
      * @return self
      */
-    function set($key, $value)
-    {
+    function set(
+        $key,
+        #[\SensitiveParameter]
+        $value
+    ) {
         Arr::dataSet()($this->_ENV, $key, $value);
         return $this;
     }
@@ -77,14 +95,17 @@ final class Env
      * @param mixed[] $data
      * @return self
      */
-    function load(array $data, bool $overwrite = false)
-    {
+    function load(
+        #[\SensitiveParameter]
+        array $data,
+        bool $overwrite = false
+    ) {
         if ($overwrite) {
             $this->_ENV = $data;
             return $this;
         }
 
-        if (!$this->_ENV) {
+        if ($this->_ENV === []) {
             $this->_ENV = $data;
         } else {
             $this->_ENV = \array_merge($this->_ENV, $data);
