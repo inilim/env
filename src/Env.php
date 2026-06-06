@@ -78,7 +78,7 @@ final class Env
         $key,
         #[\SensitiveParameter]
         $value
-    ) {
+    ): Env {
         Arr::dataSet()($this->_ENV, $key, $value);
         return $this;
     }
@@ -99,10 +99,9 @@ final class Env
         #[\SensitiveParameter]
         array $data,
         bool $overwrite = false
-    ) {
+    ): Env {
         if ($overwrite) {
-            $this->_ENV = $data;
-            return $this;
+            return $this->overload($data);
         }
 
         if ($this->_ENV === []) {
@@ -114,9 +113,21 @@ final class Env
     }
 
     /**
+     * @param mixed[] $data
      * @return self
      */
-    function loadFromFile(string $file, bool $overwrite = false)
+    function overload(
+        #[\SensitiveParameter]
+        array $data
+    ): Env {
+        $this->_ENV = $data;
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    function loadFromFile(string $file, bool $overwrite = false): Env
     {
         $this->load(File::getRequire($file), $overwrite);
         return $this;
