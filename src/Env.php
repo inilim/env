@@ -2,8 +2,8 @@
 
 namespace Inilim\Env;
 
-use Inilim\Tool\Arr;
 use Inilim\Tool\File;
+use Inilim\Tool\LarArr;
 
 final class Env
 {
@@ -22,7 +22,7 @@ final class Env
         #[\SensitiveParameter]
         $default = null
     ) {
-        return Arr::dataGet($this->_ENV, $key, $default);
+        return LarArr::dataGet($this->_ENV, $key, $default);
     }
 
     /**
@@ -33,7 +33,7 @@ final class Env
         #[\SensitiveParameter]
         ?string $default = null
     ): string {
-        return Arr::string($this->_ENV, $key, $default);
+        return LarArr::string($this->_ENV, $key, $default);
     }
 
     /**
@@ -44,7 +44,7 @@ final class Env
         #[\SensitiveParameter]
         ?bool $default = null
     ): bool {
-        return Arr::boolean($this->_ENV, $key, $default);
+        return LarArr::boolean($this->_ENV, $key, $default);
     }
 
     /**
@@ -55,7 +55,7 @@ final class Env
         #[\SensitiveParameter]
         ?int $default = null
     ): int {
-        return Arr::integer($this->_ENV, $key, $default);
+        return LarArr::integer($this->_ENV, $key, $default);
     }
 
     /**
@@ -66,20 +66,19 @@ final class Env
         #[\SensitiveParameter]
         ?float $default = null
     ): float {
-        return Arr::float($this->_ENV, $key, $default);
+        return LarArr::float($this->_ENV, $key, $default);
     }
 
     /**
      * @param int|string $key
      * @param mixed $value
-     * @return self
      */
     function set(
         $key,
         #[\SensitiveParameter]
         $value
-    ): Env {
-        Arr::dataSet()($this->_ENV, $key, $value);
+    ): self {
+        LarArr::dataSet()($this->_ENV, $key, $value);
         return $this;
     }
 
@@ -88,23 +87,22 @@ final class Env
      */
     function has($keys): bool
     {
-        return Arr::has($this->_ENV, $keys);
+        return LarArr::has($this->_ENV, $keys);
     }
 
     /**
      * @param mixed[] $data
-     * @return self
      */
     function load(
         #[\SensitiveParameter]
         array $data,
         bool $overwrite = false
-    ): Env {
+    ): self {
         if ($overwrite) {
             return $this->overload($data);
         }
 
-        if ($this->_ENV === []) {
+        if ([] === $this->_ENV) {
             $this->_ENV = $data;
         } else {
             $this->_ENV = \array_merge($this->_ENV, $data);
@@ -114,20 +112,18 @@ final class Env
 
     /**
      * @param mixed[] $data
-     * @return self
      */
     function overload(
         #[\SensitiveParameter]
         array $data
-    ): Env {
+    ): self {
         $this->_ENV = $data;
         return $this;
     }
 
     /**
-     * @return self
      */
-    function loadFromFile(string $file, bool $overwrite = false): Env
+    function loadFromFile(string $file, bool $overwrite = false): self
     {
         $this->load(File::getRequire($file), $overwrite);
         return $this;
