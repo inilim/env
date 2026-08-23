@@ -5,6 +5,7 @@ namespace Inilim\Env;
 use Inilim\Tool\File;
 use Inilim\Tool\Lar;
 use Inilim\Tool\LarArr;
+use Inilim\Tool\PF;
 
 final class Env
 {
@@ -24,6 +25,37 @@ final class Env
         $default = null
     ) {
         return Lar::dataGet($this->_ENV, $key, $default);
+    }
+
+    /**
+     * @param int|string $key
+     * @return mixed[]
+     */
+    function getArray($key): array
+    {
+        $value = Lar::dataGet($this->_ENV, $key);
+        if (!\is_array($value)) {
+            throw new \InvalidArgumentException(
+                \sprintf('Array value for key [%s] must be a array, %s found.', $key, \gettype($value))
+            );
+        }
+        return $value;
+    }
+
+    /**
+     * @param int|string $key
+     * @return list<mixed>
+     */
+    function getArrayList($key): array
+    {
+        $value = $this->getArray($key);
+        if (!PF::array_is_list($value)) {
+            throw new \InvalidArgumentException(
+                \sprintf('Array value for key [%s] must be a list.', $key)
+            );
+        }
+
+        return $value;
     }
 
     /**
