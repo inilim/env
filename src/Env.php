@@ -3,6 +3,7 @@
 namespace Inilim\Env;
 
 use Inilim\Tool\File;
+use Inilim\Tool\Lar;
 use Inilim\Tool\LarArr;
 
 final class Env
@@ -22,7 +23,7 @@ final class Env
         #[\SensitiveParameter]
         $default = null
     ) {
-        return LarArr::dataGet($this->_ENV, $key, $default);
+        return Lar::dataGet($this->_ENV, $key, $default);
     }
 
     /**
@@ -78,7 +79,7 @@ final class Env
         #[\SensitiveParameter]
         $value
     ): self {
-        LarArr::dataSet()($this->_ENV, $key, $value);
+        Lar::dataSet()($this->_ENV, $key, $value);
         return $this;
     }
 
