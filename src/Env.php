@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Inilim\Env;
 
+use Inilim\Env\SensitiveValue;
 use Inilim\Tool\File;
 use Inilim\Tool\Lar;
 use Inilim\Tool\LarArr;
@@ -9,10 +12,7 @@ use Inilim\Tool\PF;
 
 final class Env
 {
-    /**
-     * @var mixed[]
-     */
-    protected array $_ENV = [];
+    private SensitiveValue $env;
 
     /**
      * @param int|string $key
@@ -24,7 +24,7 @@ final class Env
         #[\SensitiveParameter]
         $default = null
     ) {
-        return Lar::dataGet($this->_ENV, $key, $default);
+        return Lar::dataGet($this->env->getValue(), $key, $default);
     }
 
     /**
@@ -33,7 +33,7 @@ final class Env
      */
     function getArray($key): array
     {
-        $value = Lar::dataGet($this->_ENV, $key);
+        $value = Lar::dataGet($this->env->getValue(), $key);
         if (!\is_array($value)) {
             throw new \InvalidArgumentException(
                 \sprintf('Array value for key [%s] must be a array, %s found.', $key, \gettype($value))
@@ -66,7 +66,7 @@ final class Env
         #[\SensitiveParameter]
         ?string $default = null
     ): string {
-        return LarArr::string($this->_ENV, $key, $default);
+        return LarArr::string($this->env->getValue(), $key, $default);
     }
 
     /**
@@ -74,10 +74,9 @@ final class Env
      */
     function getBool(
         $key,
-        #[\SensitiveParameter]
         ?bool $default = null
     ): bool {
-        return LarArr::boolean($this->_ENV, $key, $default);
+        return LarArr::boolean($this->env->getValue(), $key, $default);
     }
 
     /**
@@ -88,7 +87,7 @@ final class Env
         #[\SensitiveParameter]
         ?int $default = null
     ): int {
-        return LarArr::integer($this->_ENV, $key, $default);
+        return LarArr::integer($this->env->getValue(), $key, $default);
     }
 
     /**
@@ -99,7 +98,7 @@ final class Env
         #[\SensitiveParameter]
         ?float $default = null
     ): float {
-        return LarArr::float($this->_ENV, $key, $default);
+        return LarArr::float($this->env->getValue(), $key, $default);
     }
 
     /**
@@ -111,7 +110,7 @@ final class Env
         #[\SensitiveParameter]
         $value
     ): self {
-        Lar::dataSet()($this->_ENV, $key, $value);
+        Lar::dataSet()($this->env->getValue(), $key, $value);
         return $this;
     }
 
@@ -120,7 +119,7 @@ final class Env
      */
     function has($keys): bool
     {
-        return LarArr::has($this->_ENV, $keys);
+        return LarArr::has($this->env->getValue(), $keys);
     }
 
     /**
@@ -135,10 +134,10 @@ final class Env
             return $this->overload($data);
         }
 
-        if ([] === $this->_ENV) {
-            $this->_ENV = $data;
+        if ([] === $this->env->getValue()) {
+            $this->env = new SensitiveValue($data);
         } else {
-            $this->_ENV = \array_merge($this->_ENV, $data);
+            $this->env = new SensitiveValue(\array_merge($this->env->getValue(), $data));
         }
         return $this;
     }
@@ -150,7 +149,7 @@ final class Env
         #[\SensitiveParameter]
         array $data
     ): self {
-        $this->_ENV = $data;
+        $this->env = new SensitiveValue($data);
         return $this;
     }
 
@@ -167,6 +166,6 @@ final class Env
      */
     function getAll(): array
     {
-        return $this->_ENV;
+        return $this->env->getValue();
     }
 }
