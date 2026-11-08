@@ -36,9 +36,7 @@ final class Env
     {
         $value = Lar::dataGet($this->env->getValue(), $key);
         if (!\is_array($value)) {
-            throw new \InvalidArgumentException(
-                \sprintf('Array value for key [%s] must be a array, %s found.', $key, \gettype($value))
-            );
+            throw Obj::sprintfInvalidArgumentException('Array value for key [%s] must be a array, %s found.', [$key, \gettype($value)]);
         }
         return $value;
     }
@@ -51,9 +49,7 @@ final class Env
     {
         $value = $this->getArray($key);
         if (!PF::array_is_list($value)) {
-            throw new \InvalidArgumentException(
-                \sprintf('Array value for key [%s] must be a list.', $key)
-            );
+            throw Obj::sprintfInvalidArgumentException('Array value for key [%s] must be a list.', [$key]);
         }
 
         return $value;
