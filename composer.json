@@ -15,7 +15,8 @@
   ],
   "require": {
     "php": ">=7.4",
-    "inilim/tools": "^0.1"
+    "inilim/tools": "^0.1",
+    "inilim/sensitive-value": "^0.1"
   },
   "require-dev": {
     "phpstan/phpstan": "^2.1"

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Inilim\Env;
 
-use Inilim\Env\SensitiveValue;
+use Inilim\SensitiveValue\SensitiveValue;
 use Inilim\Tool\File;
 use Inilim\Tool\Lar;
 use Inilim\Tool\LarArr;
+use Inilim\Tool\Obj;
 use Inilim\Tool\PF;
 
 final class Env
@@ -127,11 +128,15 @@ final class Env
      */
     function load(
         #[\SensitiveParameter]
-        array $data,
+        $data,
         bool $overwrite = false
     ): self {
         if ($overwrite) {
             return $this->overload($data);
+        } else {
+            if (!\is_array($data)) {
+                throw Obj::sprintfInvalidArgumentException('Invalid type value. Expect array, given %s', [\gettype($data)]);
+            }
         }
 
         if ([] === $this->env->getValue()) {
@@ -147,8 +152,11 @@ final class Env
      */
     function overload(
         #[\SensitiveParameter]
-        array $data
+        $data
     ): self {
+        if (!\is_array($data)) {
+            throw Obj::sprintfInvalidArgumentException('Invalid type value. Expect array, given %s', [\gettype($data)]);
+        }
         $this->env = new SensitiveValue($data);
         return $this;
     }
